@@ -9,9 +9,9 @@ RUN apk add --no-cache \
     curl build-base openssl-dev expat-dev libevent-dev
 
 # Download and compile Unbound
-RUN curl -sSL https://nlnetlabs.nl{UNBOUND_VERSION}.tar.gz -o unbound.tar.gz && \
+RUN curl -sSL https://nlnetlabs.nl/downloads/unbound/unbound-latest.tar.gz -o unbound.tar.gz && \
     tar xzf unbound.tar.gz && \
-    cd unbound-${UNBOUND_VERSION} && \
+    cd unbound-*/ && \
     ./configure --prefix=/usr --sysconfdir=/etc --with-libevent && \
     make -j$(nproc) && \
     make install
