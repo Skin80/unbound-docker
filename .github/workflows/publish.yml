@@ -36,13 +36,14 @@ jobs:
 
       - name: Set lower case owner name
         run: |
-          echo "REPO_OWNER=${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+          echo "REPO_OWNER=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: ${{ github.repository_owner }}
 
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          # 3. Explicitly target both platforms
           platforms: linux/amd64,linux/arm64
           tags: ghcr.io/${{ env.REPO_OWNER }}/unbound-docker:latest
