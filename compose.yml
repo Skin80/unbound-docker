@@ -1,12 +1,21 @@
 services:
   unbound:
-    image: ghcr.io/skin80/unbound-docker:latest
+    image: ghcr.io/skin80/unbound-docker:${UNBOUND_IMAGE_TAG}
     container_name: unbound
     restart: unless-stopped
     ports:
-      - "5335:53/tcp"
-      - "5335:53/udp"
+      - "${UNBOUND_HOST_PORT}:53/tcp"
+      - "${UNBOUND_HOST_PORT}:53/udp"
+    networks:
+      dns_net:
+        ipv4_address: 172.20.0.10
     volumes:
       - ./unbound:/opt/unbound/etc/unbound:ro
     # Optional: ensure it runs as a non-root user for security
     user: "unbound"
+
+networks:
+  dns_net:
+    ipam:
+      config:
+        - subnet: ${DNS_NETWORK_SUBNET}
