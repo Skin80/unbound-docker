@@ -16,6 +16,9 @@ RUN curl -sSL https://nlnetlabs.nl/downloads/unbound/unbound-latest.tar.gz -o un
     make -j$(nproc) && \
     make install
 
+# Download default root hints file
+RUN curl -sSL https://www.internic.net -o /etc/unbound/root.hints
+
 # Stage 2: Production image
 FROM alpine:3.19
 
