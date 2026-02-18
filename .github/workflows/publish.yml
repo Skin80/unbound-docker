@@ -2,7 +2,11 @@ name: Build and Publish Unbound
 
 on:
   push:
-    branches: [ "main" ] # Triggers on every push to main
+    branches: [ "main" ]
+  # Run every Monday at 3 AM UTC
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
 
 jobs:
   build-and-push:
