@@ -1,0 +1,12 @@
+services:
+  unbound:
+    image: ghcr.io/skin80/unbound-docker:latest
+    container_name: unbound
+    restart: unless-stopped
+    ports:
+      - "5335:53/tcp"
+      - "5335:53/udp"
+    volumes:
+      - ./unbound:/opt/unbound/etc/unbound:ro
+    # Optional: ensure it runs as a non-root user for security
+    user: "unbound"
